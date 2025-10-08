@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ACK Search - MVP</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      background: #f9f9f9;
+    }
+    .container {
+      margin-top: 15%;
+    }
+    h1 {
+      font-size: 48px;
+      color: #202124;
+    }
+    input[type="text"] {
+      width: 50%;
+      padding: 12px;
+      font-size: 18px;
+      border: 1px solid #ddd;
+      border-radius: 24px;
+      outline: none;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      background: #1a73e8;
+      color: white;
+    }
+    button:hover {
+      background: #0c5cc0;
+    }
+    .results {
+      margin-top: 40px;
+      text-align: left;
+      width: 60%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .result-item {
+      background: white;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .result-item h3 {
+      margin: 0;
+      font-size: 20px;
+    }
+    .result-item p {
+      margin: 5px 0 0;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>ACK Search</h1>
+    <input type="text" id="searchBox" placeholder="अपना सवाल लिखें...">
+    <br>
+    <button onclick="search()">सर्च करें</button>
+    <div class="results" id="results"></div>
+  </div>
+
+  <script>
+    // Sample data (demo search engine)
+    const data = [
+      { title: "भारत का इतिहास", description: "भारत का इतिहास हजारों साल पुराना है।", link: "#" },
+      { title: "दिल्ली", description: "दिल्ली भारत की राजधानी है।", link: "#" },
+      { title: "ताज महल", description: "ताज महल आगरा में स्थित एक विश्व प्रसिद्ध स्मारक है।", link: "#" },
+      { title: "महात्मा गाँधी", description: "महात्मा गाँधी को राष्ट्रपिता कहा जाता है।", link: "#" },
+      { title: "भारतीय क्रिकेट", description: "भारत की क्रिकेट टीम विश्व की सबसे मज़बूत टीमों में से एक है।", link: "#" }
+    ];
+
+    function search() {
+      const query = document.getElementById("searchBox").value.toLowerCase();
+      const resultsDiv = document.getElementById("results");
+      resultsDiv.innerHTML = "";
+
+      const results = data.filter(item => 
+        item.title.toLowerCase().includes(query) || 
+        item.description.toLowerCase().includes(query)
+      );
+
+      if(results.length === 0) {
+        resultsDiv.innerHTML = "<p>कोई परिणाम नहीं मिला।</p>";
+        return;
+      }
+
+      results.forEach(r => {
+        const div = document.createElement("div");
+        div.className = "result-item";
+        div.innerHTML = `<h3><a href="${r.link}">${r.title}</a></h3><p>${r.description}</p>`;
+        resultsDiv.appendChild(div);
+      });
+    }
+  </script>
+</body>
+</html>
